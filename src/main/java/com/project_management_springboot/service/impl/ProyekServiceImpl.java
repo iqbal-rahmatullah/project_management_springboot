@@ -74,6 +74,12 @@ public class ProyekServiceImpl implements ProyekService {
         for (Lokasi lokasi : lokasiBaru) {
             lokasi.getProyek().add(updateProyek);
         }
+        updateProyek.setNamaProyek(proyek.getNamaProyek());
+        updateProyek.setClient(proyek.getClient());
+        updateProyek.setTanggalMulai(proyek.getTanggalMulai());
+        updateProyek.setTanggalSelesai(proyek.getTanggalSelesai());
+        updateProyek.setPimpinanProyek(proyek.getPimpinanProyek());
+        updateProyek.setKeterangan(proyek.getKeterangan());
 
        return proyekRepository.save(updateProyek);
     }

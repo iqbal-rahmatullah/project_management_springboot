@@ -37,7 +37,7 @@ public class Lokasi {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "proyek_lokasi",
             joinColumns = @JoinColumn(name = "lokasi_id"),
