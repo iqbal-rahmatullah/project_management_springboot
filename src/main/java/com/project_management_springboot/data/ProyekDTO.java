@@ -1,20 +1,18 @@
-package com.project_management_springboot.model;
+package com.project_management_springboot.data;
 
-import jakarta.persistence.*;
+import com.project_management_springboot.model.Lokasi;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "proyek")
-public class Proyek {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class ProyekDTO {
+    private Integer id;
 
     @NotBlank(message = "Nama Proyek tidak boleh kosong")
     @Size(max = 100, message = "Nama proyek tidak boleh melebihi 100 karakter")
@@ -39,31 +37,28 @@ public class Proyek {
     @Size(max = 255, message = "Keterangan tidak boleh melebihi 255 karakter")
     private String keterangan;
 
-    @Column(updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @NotEmpty(message = "Lokasi tidak boleh kosong")
+    private List<Integer> lokasiId;
 
-    @ManyToMany(mappedBy = "proyek")
-    private Set<Lokasi> lokasi;
+    public ProyekDTO() {}
 
-    public Proyek(String namaProyek, String client, LocalDate tanggalMulai, LocalDate tanggalSelesai, String pimpinanProyek, String keterangan) {
+    public ProyekDTO(Integer id, String namaProyek, String client, LocalDate tanggalMulai, LocalDate tanggalSelesai, String pimpinanProyek, String keterangan, List<Integer> lokasiId) {
+        this.id = id;
         this.namaProyek = namaProyek;
         this.client = client;
         this.tanggalMulai = tanggalMulai;
         this.tanggalSelesai = tanggalSelesai;
         this.pimpinanProyek = pimpinanProyek;
         this.keterangan = keterangan;
+        this.lokasiId = lokasiId;
     }
 
-    public Proyek() {
+    public Integer getId() {
+        return id;
     }
 
-    public @NotNull(message = "Tanggal selesai tidak boleh kosong") @FutureOrPresent(message = "Tanggal selesai tidak boleh kurang dari hari ini") LocalDate getTanggalSelesai() {
-        return tanggalSelesai;
-    }
-
-    public void setTanggalSelesai(@NotNull(message = "Tanggal selesai tidak boleh kosong") @FutureOrPresent(message = "Tanggal selesai tidak boleh kurang dari hari ini") LocalDate tanggalSelesai) {
-        this.tanggalSelesai = tanggalSelesai;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public @NotBlank(message = "Nama Proyek tidak boleh kosong") @Size(max = 100, message = "Nama proyek tidak boleh melebihi 100 karakter") String getNamaProyek() {
@@ -90,6 +85,14 @@ public class Proyek {
         this.tanggalMulai = tanggalMulai;
     }
 
+    public @NotNull(message = "Tanggal selesai tidak boleh kosong") @FutureOrPresent(message = "Tanggal selesai tidak boleh kurang dari hari ini") LocalDate getTanggalSelesai() {
+        return tanggalSelesai;
+    }
+
+    public void setTanggalSelesai(@NotNull(message = "Tanggal selesai tidak boleh kosong") @FutureOrPresent(message = "Tanggal selesai tidak boleh kurang dari hari ini") LocalDate tanggalSelesai) {
+        this.tanggalSelesai = tanggalSelesai;
+    }
+
     public @NotBlank(message = "Pimpinan proyek tidak boleh kosong") @Size(max = 100, message = "Pimpinan proyek tidak boleh melebihi 100 karakter") String getPimpinanProyek() {
         return pimpinanProyek;
     }
@@ -106,27 +109,11 @@ public class Proyek {
         this.keterangan = keterangan;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public @NotEmpty(message = "Lokasi tidak boleh kosong") List<Integer> getLokasiId() {
+        return lokasiId;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Set<Lokasi> getLokasi() {
-        return lokasi;
-    }
-
-    public void setLokasi(Set<Lokasi> lokasi) {
-        this.lokasi = lokasi;
+    public void setLokasiId(@NotEmpty(message = "Lokasi tidak boleh kosong") List<Integer> lokasiId) {
+        this.lokasiId = lokasiId;
     }
 }

@@ -36,6 +36,6 @@ public class LokasiController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(name = "id") int id) {
         Lokasi result = lokasiService.delete(id);
-        return ResponseHandler.responseBuilder("Lokasi berhasil dihapus", HttpStatus.OK, result);
+    return ResponseHandler.responseBuilder("Lokasi berhasil dihapus", HttpStatus.OK, result);
     }
 }

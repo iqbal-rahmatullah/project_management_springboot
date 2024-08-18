@@ -1,5 +1,6 @@
 package com.project_management_springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -36,7 +37,13 @@ public class Lokasi {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @ManyToMany(mappedBy = "lokasi")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(
+            name = "proyek_lokasi",
+            joinColumns = @JoinColumn(name = "lokasi_id"),
+            inverseJoinColumns = @JoinColumn(name = "proyek_id")
+    )
+    @JsonIgnore
     private Set<Proyek> proyek;
 
     public Lokasi(String provinsi, String namaLokasi, String negara, String kota) {
@@ -95,5 +102,13 @@ public class Lokasi {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Proyek> getProyek() {
+        return proyek;
+    }
+
+    public void setProyek(Set<Proyek> proyek) {
+        this.proyek = proyek;
     }
 }

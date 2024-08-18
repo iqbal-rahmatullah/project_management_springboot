@@ -37,7 +37,14 @@ public class LokasiServiceImpl implements LokasiService {
     @Override
     public Lokasi delete(int id) {
         Lokasi lokasi = lokasiRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Lokasi tidak ditemukan dengan id: " + id));
+        lokasi.getProyek().clear();
+        lokasiRepository.save(lokasi);
         lokasiRepository.delete(lokasi);
         return lokasi;
+    }
+
+    @Override
+    public List<Lokasi> getLokasiById(List<Integer> id) {
+        return lokasiRepository.findAllById(id);
     }
 }
